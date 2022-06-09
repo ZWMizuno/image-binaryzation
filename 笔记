@@ -1,0 +1,13 @@
+cv2.inRange():
+example:  
+   img_cv2 = cv2.imread(img_file)
+   hsv = cv2.cvtColor(img_cv2, cv2.COLOR_BGR2HSV)
+   lower_red = np.array([20, 20, 20])
+   upper_red = np.array([200, 200, 200])
+   # mask -> 1 channel
+   mask = cv2.inRange(hsv, lower_red, upper_red)
+    
+第一个参数：hsv指的是原图
+第二个参数：lower_red指的是图像中低于这个lower_red的值，图像值变为0
+第三个参数：upper_red指的是图像中高于这个upper_red的值，图像值变为0
+而在lower_red～upper_red之间的值变成255
