@@ -1,7 +1,7 @@
 import os
-from fire_area import fire_area
+from fire_area import fire
 
-def data_to_text(src, dst):
+def data_to_text(src, dst, model=0):
     '''
     数据读入，提取，写入
     src: 存放图片的文件夹
@@ -15,7 +15,7 @@ def data_to_text(src, dst):
     # print(filenames)
     for item in filenames:
         if item.endswith('.jpeg'):
-            area = fire_area('temperature/'+ item) # 不加'temperature/'读不到temperature文件夹中的图片，只会在本目录读字符
+            area = fire(('temperature/'+ item),model) # 不加'temperature/'读不到temperature文件夹中的图片，只会在本目录读字符
             txt.append(area)
 
     with open(dst, 'w') as fo:

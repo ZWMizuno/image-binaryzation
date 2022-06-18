@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def fire_area(src):
+def fire(src,model=0):
     '''
     提取火焰相对大小
     src: 单张图片文件名
@@ -30,10 +30,18 @@ def fire_area(src):
     new_gray_img = cv2.cvtColor(new_img, cv2.COLOR_RGB2GRAY)
     _ , output_img = cv2.threshold(new_gray_img, 170, 255, 0) # 调参
 
-    # 输出大小
-    size = np.size(output_img)
-    white_sum = np.sum(output_img>125) # 计算白点个数
-    proportion = white_sum/size
+    #计算面积
+    fire_area = np.sum(output_img > 125)  # 计算白点个数
+
+    if model == 0:
+        # 输出 面积/画布
+        size = np.size(output_img)
+        proportion = fire_area/size
+    elif model == 1:
+        # 输出 周长/面积
+        imgCanny = cv2.Canny(output_img,150,200)
+        fire_perimeter = np.sum(imgCanny>125) # 计算白点个数
+        proportion = fire_perimeter / fire_area
 
     # # 图片显示
     # cv2.imshow("output_img", output_img)
