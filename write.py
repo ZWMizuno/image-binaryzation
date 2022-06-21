@@ -3,7 +3,7 @@ from fire_area import fire
 
 def data_to_text(src, dst, model=0):
     '''
-    数据读入，提取，写入
+    src数据读入，提取，写入dst
     src: 存放图片的文件夹
     dst: 数据存放的路径
     return: None

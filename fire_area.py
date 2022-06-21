@@ -10,6 +10,8 @@ def fire(src,model=0):
 
     # 读入图片
     image = cv2.imread(src)
+    cv2.imshow("raw", image)
+    cv2.waitKey(0)
 
     # 切片
     cropped_image = image[115:615, 412:613] # Slicing to crop the image
@@ -25,10 +27,14 @@ def fire(src,model=0):
     # 对cropped_image套上mask的修改
     new_img = cropped_image.copy()
     new_img[np.where(mask0!=0)] = [0, 250, 250] # 设置新颜色
+    cv2.imshow("new image", new_img)
+    cv2.waitKey(0)
 
     # 图像二值化
     new_gray_img = cv2.cvtColor(new_img, cv2.COLOR_RGB2GRAY)
-    _ , output_img = cv2.threshold(new_gray_img, 170, 255, 0) # 调参
+    _ , output_img = cv2.threshold(new_gray_img, 170, 255, 0) # 调参(img, thresh, maxval, type)
+    cv2.imshow("binaryzation", output_img)
+    cv2.waitKey(0)
 
     #计算面积
     fire_area = np.sum(output_img > 125)  # 计算白点个数
@@ -40,6 +46,8 @@ def fire(src,model=0):
     elif model == 1:
         # 输出 周长/面积
         imgCanny = cv2.Canny(output_img,150,200)
+        cv2.imshow("edge", imgCanny)
+        cv2.waitKey(0)
         fire_perimeter = np.sum(imgCanny>125) # 计算白点个数
         proportion = fire_perimeter / fire_area
 
